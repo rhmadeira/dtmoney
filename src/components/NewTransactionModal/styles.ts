@@ -72,8 +72,13 @@ export const ContainerTransactionType = styled.div`
   margin-top: 0.5rem;
 `;
 
-export const TransactionButtonType = styled.button`
+interface TransactionTypeButtonProps {
+  variat: "income" | "outcome";
+}
+
+export const TransactionButtonType = styled.button<TransactionTypeButtonProps>`
   background: ${({ theme }) => theme["gray-700"]};
+  padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,4 +86,19 @@ export const TransactionButtonType = styled.button`
   border: 0;
   border-radius: 0.25rem;
   cursor: pointer;
+  border: 0;
+  color: ${({ theme }) => theme["gray-300"]};
+  /* background: ${({ theme, variat }) => {
+    //
+    if (variat === "income") {
+      return theme["green-500"];
+    } else {
+      return theme["red-500"];
+    }
+  }}; */
+
+  svg {
+    color: ${({ theme, variat }) =>
+      variat === "income" ? theme["green-500"] : theme["red-500"]};
+  }
 `;
