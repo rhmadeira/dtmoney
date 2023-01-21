@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Summary from "../../components/Summary";
+import { TransactionsContext } from "../../contexts/Transactions";
 import SearchForm from "./components/SearchForm";
 import {
   Container,
@@ -9,26 +10,8 @@ import {
   TransactionTable,
 } from "./styles";
 
-interface Transaction {
-  id: number;
-  description: string;
-  type: "income" | "outcome";
-  category: string;
-  price: number;
-  createdAt: string;
-}
-
 export default function Transactions() {
-const [transactions, setTransactions] = useState<Transaction[]>([]);
-
-  useEffect(()=>{
-    async function loadTransactions(){
-      const response = await fetch('http://localhost:3000/transactions');
-      const data = await response.json();
-      setTransactions(data);
-    }
-    loadTransactions();
-  }, [])
+  const {transactions} = useContext(TransactionsContext);
 
   return (
     <Container>
@@ -38,7 +21,7 @@ const [transactions, setTransactions] = useState<Transaction[]>([]);
         <SearchForm />
         <TransactionTable>
           <tbody>
-            {transactions.map((transaction) => (
+            {transactions?.map((transaction) => (
               <tr key={transaction.id}>
                 <td width="50%">{transaction.description}</td>
                 <td><PriceStyle variant={transaction.type}>{transaction.price}</PriceStyle></td>
