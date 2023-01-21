@@ -9,9 +9,10 @@ import {
   TransactionContainer,
   TransactionTable,
 } from "./styles";
+import { priceFormater, dateFormater } from "../../utils/Formatter";
 
 export default function Transactions() {
-  const {transactions} = useContext(TransactionsContext);
+  const { transactions } = useContext(TransactionsContext);
 
   return (
     <Container>
@@ -24,9 +25,15 @@ export default function Transactions() {
             {transactions?.map((transaction) => (
               <tr key={transaction.id}>
                 <td width="50%">{transaction.description}</td>
-                <td><PriceStyle variant={transaction.type}>{transaction.price}</PriceStyle></td>
+                <td>
+                  <PriceStyle variant={transaction.type}>
+                    {transaction.type === "outcome" ? "- " : ""}
+                    {priceFormater.format(transaction.price)}
+                  </PriceStyle>
+                </td>
                 <td>{transaction.category}</td>
-                <td>{transaction.createdAt}</td>
+                {/* A data vem como string e precisa ser convertida para Date */}
+                <td>{dateFormater.format(new Date(transaction.createdAt))}</td>
               </tr>
             ))}
           </tbody>
