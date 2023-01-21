@@ -1,4 +1,5 @@
 import * as Dialog from "@radix-ui/react-dialog";
+import * as RadioGroup from '@radix-ui/react-radio-group';
 import { ArrowCircleDown, ArrowCircleUp, X } from "phosphor-react";
 import {
   CloseButton,
@@ -24,11 +25,12 @@ export default function NewTransactionModal() {
           <input type="text" placeholder="Categoria" />
 
           <ContainerTransactionType>
-            <TransactionButtonType type="button" variat="income">
+            {/* por se tratar de um radio value é obrigatório */}
+            <TransactionButtonType type="button" variant="income" value="income">
               <ArrowCircleUp size={24} />
               Entrada
             </TransactionButtonType>
-            <TransactionButtonType type="button" variat="outcome">
+            <TransactionButtonType type="button" variant="outcome" value="outcome">
               <ArrowCircleDown size={24} />
               Saída
             </TransactionButtonType>
