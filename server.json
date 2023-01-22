@@ -23,6 +23,30 @@
       "category": "Alimentação",
       "price": 15,
       "createdAt": "2022-07-29T19:30:57.505Z"
+    },
+    {
+      "description": "Desenvolvimento back end",
+      "price": 10000,
+      "category": "Venda",
+      "type": "income",
+      "createdAt": "2023-01-22T15:00:39.587Z",
+      "id": 4
+    },
+    {
+      "description": "Uber",
+      "price": 45,
+      "category": "Locomoção",
+      "type": "outcome",
+      "createdAt": "2023-01-22T15:03:09.886Z",
+      "id": 5
+    },
+    {
+      "description": "Japonês",
+      "price": 80,
+      "category": "Alimentação",
+      "type": "outcome",
+      "createdAt": "2023-01-22T19:02:10.417Z",
+      "id": 6
     }
   ]
 }
