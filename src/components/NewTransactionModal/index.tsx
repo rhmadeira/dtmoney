@@ -11,20 +11,24 @@ import {
 import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 const newTransactionModalSchema = zod.object({
   description: zod.string(),
   price: zod.number(),
   category: zod.string(),
-  // type: zod.enum(["income", "outcome"]),
+  type: zod.enum(["income", "outcome"]), // enum: lista de valores permitidos
 });
 
 type NewTransactionFormProps = zod.infer<typeof newTransactionModalSchema>;
 
 export default function NewTransactionModal() {
-  const { register, handleSubmit, formState } =
+  const { register, handleSubmit, formState, control } =
     useForm<NewTransactionFormProps>({
       resolver: zodResolver(newTransactionModalSchema),
+      defaultValues: {
+        type: "income",
+      },
     });
   async function handleCreateNewTransaction(data: NewTransactionFormProps) {
     await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -57,26 +61,36 @@ export default function NewTransactionModal() {
             type="text"
             placeholder="Categoria"
           />
-
-          <ContainerTransactionType>
-            {/* por se tratar de um radio value é obrigatório */}
-            <TransactionButtonType
-              type="button"
-              variant="income"
-              value="income"
-            >
-              <ArrowCircleUp size={24} />
-              Entrada
-            </TransactionButtonType>
-            <TransactionButtonType
-              type="button"
-              variant="outcome"
-              value="outcome"
-            >
-              <ArrowCircleDown size={24} />
-              Saída
-            </TransactionButtonType>
-          </ContainerTransactionType>
+          <Controller
+            control={control}
+            name="type"
+            render={({ field }) => {
+              return (
+                <ContainerTransactionType
+                  onValueChange={field.onChange}
+                  value={field.value}
+                >
+                  {/* por se tratar de um radio value é obrigatório */}
+                  <TransactionButtonType
+                    type="button"
+                    variant="income"
+                    value="income"
+                  >
+                    <ArrowCircleUp size={24} />
+                    Entrada
+                  </TransactionButtonType>
+                  <TransactionButtonType
+                    type="button"
+                    variant="outcome"
+                    value="outcome"
+                  >
+                    <ArrowCircleDown size={24} />
+                    Saída
+                  </TransactionButtonType>
+                </ContainerTransactionType>
+              );
+            }}
+          />
 
           <button type="submit" disabled={formState.isSubmitting}>
             Cadastrar
